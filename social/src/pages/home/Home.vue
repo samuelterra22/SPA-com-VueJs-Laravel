@@ -1,6 +1,6 @@
 <template>
 
-  <span>
+  <site-template>
 
     <publicar-conteudo-vue/>
 
@@ -17,11 +17,13 @@
       />
 
     </card-conteudo-vue>
-  </span>
+
+  </site-template>
 
 </template>
 
 <script>
+  import SiteTemplate from '@/templates/SiteTemplate'
   import CardConteudoVue from '@/components/social/CardConteudoVue'
   import CardDetalheVue from '@/components/social/CardDetalheVue'
   import PublicarConteudoVue from '@/components/social/PublicarConteudoVue'
@@ -34,6 +36,7 @@
       }
     },
     components: {
+      SiteTemplate,
       CardConteudoVue,
       CardDetalheVue,
       PublicarConteudoVue
