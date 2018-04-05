@@ -9,15 +9,13 @@
       <div class="container">
 
         <div class="row">
-          <grid-vue tamanho="6">
-
+          <grid-vue tamanho="8">
             <card-menu-vue>
-
+              <slot name="menuesquerdo"/>
             </card-menu-vue>
-
           </grid-vue>
-          <grid-vue tamanho="6">
-            <slot/>
+          <grid-vue tamanho="4">
+            <slot name="principal"/>
           </grid-vue>
         </div>
 

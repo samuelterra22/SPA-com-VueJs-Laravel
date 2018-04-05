@@ -2,12 +2,17 @@
 
   <login-template>
 
-    <h2>Login</h2>
+    <span slot="menuesquerdo">
+      <img class="responsive-img" src="https://www.designerd.com.br/wp-content/uploads/2013/06/criar-rede-social.png"/>
+    </span>
 
-    <input type="text" placeholder="E-mail" value=""/>
-    <input type="text" placeholder="Senha" value=""/>
-    <button type="button" class="btn">Entrar</button>
+    <span slot="principal">
+      <h2>Login</h2>
 
+      <input type="text" placeholder="E-mail" value=""/>
+      <input type="text" placeholder="Senha" value=""/>
+      <button type="button" class="btn">Entrar</button>
+    </span>
 
   </login-template>
 
