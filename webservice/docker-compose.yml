@@ -1,0 +1,94 @@
+version: '3.4'
+services:
+  app:
+    image: ambientum/php:7.2-nginx
+    container_name: webservice-app
+    ports:
+      - 80:8080
+    volumes:
+      - .:/var/www/app
+    links:
+      - mariadb
+      - redis
+    networks:
+      - webservice
+
+  mariadb:
+    image: mariadb:10.3
+    container_name: webservice-mariadb
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: webservice
+      MYSQL_DATABASE: webservice
+      MYSQL_USER: webservice
+      MYSQL_PASSWORD: webservice
+    volumes:
+      - webservice-mariadb:/var/lib/mariadb
+    networks:
+      - webservice
+
+  redis:
+    image: redis:4.0.8-alpine
+    container_name: webservice-redis
+    command: --appendonly yes
+    volumes:
+      - webservice-redis:/data
+    ports:
+      - 6379:6379
+    networks:
+      - webservice
+
+  selenium:
+    image: selenium/standalone-chrome
+    container_name: webservice-selenium
+    networks:
+      - webservice
+
+  npm:
+    image: ambientum/node:9
+    container_name: webservice-npm
+    volumes:
+      - .:/var/www/app
+    ports:
+      - 8080:8080
+    networks:
+      - webservice
+
+  echo:
+    image: ambientum/node:9
+    container_name: webservice-echo
+    command: >
+      bash -c "
+      npm install -g laravel-echo-server;
+      laravel-echo-server start;
+      "
+    volumes:
+      - .:/var/www/app
+    ports:
+      - 6001:6001
+    networks:
+      - webservice
+
+  horizon:
+    image: ambientum/php:7.2
+    container_name: webservice-horizon
+    command: php artisan horizon
+    volumes:
+      - .:/var/www/app
+    depends_on:
+      - redis
+    links:
+      - mariadb
+      - redis
+    networks:
+      - webservice
+
+networks:
+  webservice:
+    driver: bridge
+volumes:
+  webservice-mariadb:
+    driver: local
+  webservice-redis:
+    driver: local
