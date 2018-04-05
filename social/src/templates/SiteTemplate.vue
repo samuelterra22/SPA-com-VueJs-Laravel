@@ -2,7 +2,10 @@
   <span>
 
     <header>
-      <nav-bar-vue logo="Social" url="/" cor="green darken-1"/>
+      <nav-bar-vue logo="Social" url="#/" cor="green darken-1">
+        <li><a href="#/">Home</a></li>
+        <li><a href="#/login">Entrar</a></li>
+      </nav-bar-vue>
     </header>
 
     <main>
@@ -11,23 +14,12 @@
           <grid-vue tamanho="4">
 
             <card-menu-vue>
-              <div class="row valign-wrapper">
-                <grid-vue tamanho="4">
-                  <img src="http://materializecss.com/images/yuna.jpg" alt="" class="circle responsive-img">
-                  <!-- notice the "circle" class -->
-                </grid-vue>
-                <grid-vue tamanho="8">
-                  <span class="black-text">
-                    <h5>Maria Silva</h5>
-                    This is a square image.
-                  </span>
-                </grid-vue>
-              </div>
+              <slot name="menuesquerdo"/>
             </card-menu-vue>
 
           </grid-vue>
           <grid-vue tamanho="8">
-            <slot/>
+            <slot name="principal"/>
           </grid-vue>
         </div>
       </div>
