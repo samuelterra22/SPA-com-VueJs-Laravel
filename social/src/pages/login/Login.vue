@@ -7,11 +7,26 @@
     </span>
 
     <span slot="principal">
-      <h2>Login</h2>
+      <span v-if="!cadastro">
+        <h2>Login</h2>
 
-      <input type="text" placeholder="E-mail" value=""/>
-      <input type="text" placeholder="Senha" value=""/>
-      <button type="button" class="btn">Entrar</button>
+        <input type="email" placeholder="E-mail" value=""/>
+        <input type="password" placeholder="Senha" value=""/>
+        <button class="btn">Entrar</button>
+        <button class="btn orange" v-on:click="cadastro = !cadastro">Cadastre-se</button>
+      </span>
+
+      <span v-if="cadastro">
+        <h2>Cadastro</h2>
+
+        <input type="text" placeholder="Nome" value=""/>
+        <input type="email" placeholder="E-mail" value=""/>
+        <input type="password" placeholder="Senha" value=""/>
+        <input type="password" placeholder="Confirme sua senha" value=""/>
+        <button class="btn">Cadastrar</button>
+        <button class="btn orange" v-on:click="cadastro = !cadastro">Já tenho conta</button>
+
+      </span>
     </span>
 
   </login-template>
@@ -20,22 +35,16 @@
 
 <script>
   import LoginTemplate from '@/templates/LoginTemplate'
-  import CardConteudoVue from '@/components/social/CardConteudoVue'
-  import CardDetalheVue from '@/components/social/CardDetalheVue'
-  import PublicarConteudoVue from '@/components/social/PublicarConteudoVue'
 
   export default {
     name: 'Login',
     data () {
       return {
-        msg: 'Welcome to Your Vue.js App'
+        cadastro: false
       }
     },
     components: {
       LoginTemplate,
-      CardConteudoVue,
-      CardDetalheVue,
-      PublicarConteudoVue
     }
   }
 </script>
