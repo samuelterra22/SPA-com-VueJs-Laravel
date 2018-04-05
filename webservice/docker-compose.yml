@@ -45,31 +45,6 @@ services:
     networks:
       - webservice
 
-  npm:
-    image: ambientum/node:9
-    container_name: webservice-npm
-    volumes:
-      - .:/var/www/app
-    ports:
-      - 8080:8080
-    networks:
-      - webservice
-
-  echo:
-    image: ambientum/node:9
-    container_name: webservice-echo
-    command: >
-      bash -c "
-      npm install -g laravel-echo-server;
-      laravel-echo-server start;
-      "
-    volumes:
-      - .:/var/www/app
-    ports:
-      - 6001:6001
-    networks:
-      - webservice
-
   horizon:
     image: ambientum/php:7.2
     container_name: webservice-horizon
