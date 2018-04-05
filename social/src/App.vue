@@ -25,7 +25,6 @@
               </div>
             </card-menu-vue>
 
-
           </grid-vue>
           <grid-vue tamanho="8">
             <router-view/>
@@ -49,7 +48,7 @@
   import NavBarVue from '@/components/layouts/NavBarVue'
   import FooterVue from '@/components/layouts/FooterVue'
   import GridVue from '@/components/layouts/GridVue'
-  import CardMenuVue from './components/layouts/CardMenuVue'
+  import CardMenuVue from '@/components/layouts/CardMenuVue'
 
   export default {
     name: 'App',
