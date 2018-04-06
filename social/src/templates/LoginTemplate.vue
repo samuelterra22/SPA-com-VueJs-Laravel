@@ -3,7 +3,6 @@
 
     <header>
       <nav-bar-vue logo="Social" url="/" cor="green darken-1">
-        <li><router-link to="/">Home</router-link></li>
         <li v-if="!usuario"><router-link to="/login">Login</router-link></li>
         <li v-if="!usuario"><router-link to="/cadastro">Cadastre-se</router-link></li>
         <li v-if="usuario"><router-link to="/perfil">{{usuario.name}}</router-link></li>
@@ -63,6 +62,7 @@
       let usuarioAux = sessionStorage.getItem('usuario')
       if (usuarioAux){
         this.usuario = JSON.parse(usuarioAux)
+        this.$router.push('/')
       }
     },
     methods:{
