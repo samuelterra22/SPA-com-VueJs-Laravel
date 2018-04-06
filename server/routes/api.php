@@ -127,6 +127,12 @@ Route::middleware('auth:api')->put('/perfil', function (Request $request) {
             mkdir($diretorioPai, 0700);
         }
 
+        if ($user->imagem){
+            if (file_exists($user->imagem)){
+                unlink($user->imagem);
+            }
+        }
+
         if (!file_exists($diretorioImagem)){
             mkdir($diretorioImagem, 0700);
         }
