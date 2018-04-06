@@ -74,7 +74,22 @@
             }
           })
           .then(response => {
+
+            if (response.data.token) {
+
               console.log(response.data)
+              sessionStorage.setItem('usuario', JSON.stringify(response.data))
+              alert('Perfil atualizado!')
+
+            } else {
+              // erro de validação
+              console.log('Erros de validação')
+              let erros = ''
+              for (let erro of Object.values(response.data)) {
+                erros += erro + ' '
+              }
+              alert(erros)
+            }
           })
           .catch(e => {
             console.log(e)
