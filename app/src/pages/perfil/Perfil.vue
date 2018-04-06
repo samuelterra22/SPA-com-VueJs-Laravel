@@ -48,10 +48,10 @@
         password_confirmation: ''
       }
     },
-    created(){
+    created () {
       console.log('Perfil created')
       let usuarioAux = sessionStorage.getItem('usuario')
-      if (usuarioAux){
+      if (usuarioAux) {
         this.usuario = JSON.parse(usuarioAux)
         this.name = this.usuario.name
         this.email = this.usuario.email
@@ -62,34 +62,19 @@
     },
     methods: {
       perfil () {
-        axios.post('http://localhost/api/perfil', {
-          name: this.name,
-          email: this.email,
-          password: this.password,
-          password_confirmation: this.password_confirmation
-        })
-          .then(response => {
-            console.log(response)
-            if (response.data.token) {
-              // login com sucesso
-              console.log('Cadastro realizado com sucesso')
-              sessionStorage.setItem('usuario', JSON.stringify(response.data))
-              this.$router.push('/')
-
-            } else if (response.data.status == false) {
-              // login não existe
-              console.log('Erro no cadastro! Tente novamente mais tarde.')
-              alert('Erro no cadastro! Tente novamente mais tarde.')
-
-            } else {
-              // erro de validação
-              console.log('Erros de validação')
-              let erros = ''
-              for (let erro of Object.values(response.data)) {
-                erros += erro + ' '
-              }
-              alert(erros)
+        axios.put('http://localhost/api/perfil', {
+            name: this.name,
+            email: this.email,
+            password: this.password,
+            password_confirmation: this.password_confirmation
+          },
+          {
+            'headers': {
+              'authorization': 'Bearer ' + this.usuario.token
             }
+          })
+          .then(response => {
+              console.log(response.data)
           })
           .catch(e => {
             console.log(e)
