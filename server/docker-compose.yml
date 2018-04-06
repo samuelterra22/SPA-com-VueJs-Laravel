@@ -2,7 +2,7 @@ version: '3.4'
 services:
   app:
     image: ambientum/php:7.2-nginx
-    container_name: webservice-app
+    container_name: server-app
     ports:
       - 80:8080
     volumes:
@@ -11,43 +11,43 @@ services:
       - mariadb
       - redis
     networks:
-      - webservice
+      - server
 
   mariadb:
     image: mariadb:10.3
-    container_name: webservice-mariadb
+    container_name: server-mariadb
     ports:
       - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: webservice
-      MYSQL_DATABASE: webservice
-      MYSQL_USER: webservice
-      MYSQL_PASSWORD: webservice
+      MYSQL_ROOT_PASSWORD: server
+      MYSQL_DATABASE: server
+      MYSQL_USER: server
+      MYSQL_PASSWORD: server
     volumes:
-      - webservice-mariadb:/var/lib/mariadb
+      - server-mariadb:/var/lib/mariadb
     networks:
-      - webservice
+      - server
 
   redis:
     image: redis:4.0.8-alpine
-    container_name: webservice-redis
+    container_name: server-redis
     command: --appendonly yes
     volumes:
-      - webservice-redis:/data
+      - server-redis:/data
     ports:
       - 6379:6379
     networks:
-      - webservice
+      - server
 
   selenium:
     image: selenium/standalone-chrome
-    container_name: webservice-selenium
+    container_name: server-selenium
     networks:
-      - webservice
+      - server
 
   horizon:
     image: ambientum/php:7.2
-    container_name: webservice-horizon
+    container_name: server-horizon
     command: php artisan horizon
     volumes:
       - .:/var/www/app
@@ -57,13 +57,13 @@ services:
       - mariadb
       - redis
     networks:
-      - webservice
+      - server
 
 networks:
-  webservice:
+  server:
     driver: bridge
 volumes:
-  webservice-mariadb:
+  server-mariadb:
     driver: local
-  webservice-redis:
+  server-redis:
     driver: local
