@@ -29,13 +29,17 @@ Route::post('/cadastro', function (Request $request) {
         return $validacao->errors();
     }
 
+    $imagem = '/perfis/padrao.png';
+
     $user = User::create([
         'name'     => $data['name'],
         'email'    => $data['email'],
         'password' => bcrypt($data['password']),
+        'imagem'   => $imagem
     ]);
 
     $user->token = $user->createToken($user->email)->accessToken;
+    $user->imagem = asset($user->imagem);
 
     return $user;
 });
@@ -141,12 +145,12 @@ Route::middleware('auth:api')->put('/perfil', function (Request $request) {
             );
 
             // check file format
-            if (!in_array($format, $allow)){
+            if (!in_array($format, $allow)) {
                 return false;
             }
 
             // check base64 format
-            if (!preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $explode[1])){
+            if (!preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $explode[1])) {
                 return false;
             }
 
@@ -155,7 +159,7 @@ Route::middleware('auth:api')->put('/perfil', function (Request $request) {
         });
 
         $validacao = Validator::make($data, [
-            'imagem'  => 'base64image',
+            'imagem' => 'base64image',
         ], ['base64image' => 'Imagem Inválida']);
 
         if ($validacao->fails()) {
