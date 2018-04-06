@@ -16,7 +16,7 @@
         <div class="file-field input-field">
           <div class="btn">
             <span>Imagem</span>
-            <input type="file">
+            <input type="file" v-on:change="salvaImagem">
           </div>
           <div class="file-path-wrapper">
             <input class="file-path validate" type="text">
@@ -41,26 +41,41 @@
     name: 'Perfil',
     data () {
       return {
-        usuario: false,
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: ''
+        usuario:false,
+        name:'',
+        email:'',
+        password:'',
+        password_confirmation:'',
+        imagem:''
       }
     },
-    created () {
-      console.log('Perfil created')
-      let usuarioAux = sessionStorage.getItem('usuario')
-      if (usuarioAux) {
-        this.usuario = JSON.parse(usuarioAux)
-        this.name = this.usuario.name
-        this.email = this.usuario.email
+    created(){
+      let usuarioAux = sessionStorage.getItem('usuario');
+      if(usuarioAux){
+        this.usuario = JSON.parse(usuarioAux);
+        this.name = this.usuario.name;
+        this.email = this.usuario.email;
       }
     },
-    components: {
-      SiteTemplate,
+    components:{
+      SiteTemplate
     },
-    methods: {
+    methods:{
+      salvaImagem(e){
+        let arquivo = e.target.files || e.dataTransfer.files;
+        if(!arquivo.length){
+          return;
+        }
+
+        let reader = new FileReader();
+        reader.onloadend = (e) => {
+          this.imagem = e.target.result;
+        };
+        reader.readAsDataURL(arquivo[0]);
+
+
+        console.log(this.imagem);
+      },
       perfil () {
         axios.put('http://localhost/api/perfil', {
             name: this.name,
