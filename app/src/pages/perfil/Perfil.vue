@@ -3,7 +3,7 @@
   <site-template>
 
     <span slot="menuesquerdo">
-      <img class="responsive-img" src="https://www.designerd.com.br/wp-content/uploads/2013/06/criar-rede-social.png"/>
+      <img :src="usuario.imagem" class="responsive-img"/>
     </span>
 
     <span slot="principal">
@@ -73,13 +73,12 @@
         };
         reader.readAsDataURL(arquivo[0]);
 
-
-        console.log(this.imagem);
       },
       perfil () {
         axios.put('http://localhost/api/perfil', {
             name: this.name,
             email: this.email,
+            imagem: this.imagem,
             password: this.password,
             password_confirmation: this.password_confirmation
           },
@@ -93,6 +92,7 @@
             if (response.data.token) {
 
               console.log(response.data)
+              this.usuario = response.data
               sessionStorage.setItem('usuario', JSON.stringify(response.data))
               alert('Perfil atualizado!')
 
