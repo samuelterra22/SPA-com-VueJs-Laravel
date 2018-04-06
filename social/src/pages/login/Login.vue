@@ -48,13 +48,20 @@
             } else if (response.data.status == false){
               // login não existe
               console.log('login não existe')
+              alert('Login inválido!')
             }else{
               // erro de validação
               console.log('erros de validação')
+              let erros = '';
+              for (let erro of Object.values(response.data)){
+                erros += erro + ' '
+              }
+              alert(erros)
             }
           })
           .catch(e => {
             console.log(e)
+            alert('Erro! Tente novamente mais tarde.')
       })
       }
     }
