@@ -24,7 +24,7 @@ Route::post('/cadastro', function (Request $request) {
         'password' => 'required|string|min:6|confirmed',
     ]);
 
-    if($validacao->fails()){
+    if ($validacao->fails()) {
         return $validacao->errors();
     }
 
@@ -37,6 +37,32 @@ Route::post('/cadastro', function (Request $request) {
     $user->token = $user->createToken($user->email)->accessToken;
 
     return $user;
+});
+Route::post('/login', function (Request $request) {
+    $data = $request->all();
+
+    $validacao = Validator::make($data, [
+        'email'    => 'required|string|email|max:255',
+        'password' => 'required|string',
+    ]);
+
+    if ($validacao->fails()) {
+        return $validacao->errors();
+    }
+
+    if (Auth::attempt([
+        'email'    => $data['email'],
+        'password' => $data['password']
+    ])) {
+        $user = auth()->user();
+        $user->token = $user->createToken($user->email)->accessToken;
+        return $user;
+    }
+
+    return [
+        'status' => false
+    ];
+
 });
 
 Route::middleware('auth:api')->get('/usuario', function (Request $request) {
