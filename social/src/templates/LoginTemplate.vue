@@ -4,8 +4,10 @@
     <header>
       <nav-bar-vue logo="Social" url="/" cor="green darken-1">
         <li><router-link to="/">Home</router-link></li>
-        <li><router-link to="/login">Login</router-link></li>
-        <li><router-link to="/cadastro">Cadastro</router-link></li>
+        <li v-if="!usuario"><router-link to="/login">Login</router-link></li>
+        <li v-if="!usuario"><router-link to="/cadastro">Cadastre-se</router-link></li>
+        <li v-if="usuario"><router-link to="/perfil">{{usuario.name}}</router-link></li>
+        <li v-if="usuario"><a v-on:click="sair()">Sair</a></li>
       </nav-bar-vue>
     </header>
 
@@ -45,11 +47,29 @@
 
   export default {
     name: 'LoginTemplate',
+    data(){
+      return {
+        usuario: false
+      }
+    },
     components: {
       CardMenuVue,
       NavBarVue,
       FooterVue,
       GridVue
+    },
+    created(){
+      console.log('created')
+      let usuarioAux = sessionStorage.getItem('usuario')
+      if (usuarioAux){
+        this.usuario = JSON.parse(usuarioAux)
+      }
+    },
+    methods:{
+      sair(){
+        sessionStorage.clear()
+        this.usuario = false
+      }
     }
   }
 </script>
