@@ -20,6 +20,12 @@
               <slot name="menuesquerdo"/>
             </card-menu-vue>
 
+            <card-menu-vue>
+              <h3>Amigos</h3>
+              <li>Murilo</li>
+              <li>Gustavo</li>
+            </card-menu-vue>
+
           </grid-vue>
           <grid-vue tamanho="8">
             <slot name="principal"/>
