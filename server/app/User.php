@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
@@ -17,7 +17,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'imagem'
+        'name',
+        'email',
+        'password',
+        'imagem'
     ];
 
     /**
@@ -26,6 +29,27 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
+
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario::class);
+    }
+
+    public function conteudos()
+    {
+        return $this->hasMany(Conteudo::class);
+    }
+
+    public function curtidas()
+    {
+        return $this->belongsToMany(Conteudo::class, 'curtidas', 'user_id', 'conteudo_id');
+    }
+
+    public function amigos()
+    {
+        return $this->belongsToMany(User::class, 'amigos', 'user_id', 'amigo_id');
+    }
 }
