@@ -11,6 +11,7 @@
 |
 */
 
+use App\Conteudo;
 use App\User;
 use Illuminate\Support\Facades\Route;
 
@@ -42,5 +43,26 @@ Route::get('/testes', function () {
 
     // Se nao tiver adicionado/removido Amigo
     //$user->amigos()->toggle($user2->id);
+
+    // Add Curtidas
+    // $conteudo = Conteudo::find(1);
+    // $user->curtidas()->toggle($conteudo->id);
+    // return $conteudo->curtidas()->count();
+    // return $conteudo->curtidas;
+
+    // Add comentário
+    // $conteudo = Conteudo::find(1);
+    // $user->comentarios()->create([
+    //   'conteudo_id' => $conteudo->id,
+    //   'texto'       => 'Show de bola',
+    //   'data'        => date('Y-m-d'),
+    // ]);
+    //
+    // $user2->comentarios()->create([
+    //    'conteudo_id' => $conteudo->id,
+    //    'texto'       => 'Não gostei',
+    //    'data'        => date('Y-m-d'),
+    //  ]);
+    // return $conteudo->comentarios;
 
 });
