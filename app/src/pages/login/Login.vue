@@ -35,36 +35,36 @@
     },
     methods: {
       login () {
-        this.$http.post(this.$urlApi + 'login', {
+        console.log('ok')
+        this.$http.post(this.$urlAPI + `login`, {
           email: this.email,
           password: this.password
         })
           .then(response => {
-            console.log(response)
-            if (response.data.token) {
+            //console.log(response)
+            if (response.data.status) {
               // login com sucesso
               console.log('login com sucesso')
-              sessionStorage.setItem('usuario', JSON.stringify(response.data))
+              sessionStorage.setItem('usuario', JSON.stringify(response.data.usuario))
               this.$router.push('/')
-
-            } else if (response.data.status == false) {
-              // login não existe
-              console.log('login não existe')
-              alert('Login inválido!')
-
-            } else {
-              // erro de validação
+            } else if (response.data.status === false && response.data.validacao) {
               console.log('erros de validação')
               let erros = ''
-              for (let erro of Object.values(response.data)) {
+              for (let erro of Object.values(response.data.erros)) {
                 erros += erro + ' '
               }
               alert(erros)
+
+            } else {
+              //login não existe
+              console.log('login não existe')
+              alert('Login inválido!')
+
             }
           })
           .catch(e => {
             console.log(e)
-            alert('Erro! Tente novamente mais tarde.')
+            alert('Erro! Tente novamente mais tarde!')
           })
       }
     }

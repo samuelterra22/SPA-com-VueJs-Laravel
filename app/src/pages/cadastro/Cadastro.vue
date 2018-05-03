@@ -40,40 +40,40 @@
       LoginTemplate,
     },
     methods: {
-      cadastro () {
-        this.$http.post(this.$urlApi + 'cadastro', {
-          name: this.name,
-          email: this.email,
-          password: this.password,
-          password_confirmation: this.password_confirmation
-        })
-          .then(response => {
-            console.log(response)
-            if (response.data.token) {
-              // login com sucesso
-              console.log('Cadastro realizado com sucesso')
-              sessionStorage.setItem('usuario', JSON.stringify(response.data))
-              this.$router.push('/')
+      methods: {
+        cadastro () {
+          console.log('ok')
+          this.$http.post(this.$urlAPI + `cadastro`, {
+            name: this.name,
+            email: this.email,
+            password: this.password,
+            password_confirmation: this.password_confirmation
+          })
+            .then(response => {
+              //console.log(response)
+              if (response.data.status) {
+                // login com sucesso
+                console.log('Cadastro realizado com sucesso')
+                sessionStorage.setItem('usuario', JSON.stringify(response.data.usuario))
+                this.$router.push('/')
+              } else if (response.data.status === false && response.data.validacao) {
+                // erros de validação
+                console.log('erros de validação')
+                let erros = ''
+                for (let erro of Object.values(response.data.erros)) {
+                  erros += erro + ' '
+                }
+                alert(erros)
 
-            } else if (response.data.status == false) {
-              // login não existe
-              console.log('Erro no cadastro! Tente novamente mais tarde.')
-              alert('Erro no cadastro! Tente novamente mais tarde.')
-
-            } else {
-              // erro de validação
-              console.log('Erros de validação')
-              let erros = ''
-              for (let erro of Object.values(response.data)) {
-                erros += erro + ' '
+              } else {
+                alert('Erro no cadastro! tente novamente mais tarde.')
               }
-              alert(erros)
-            }
-          })
-          .catch(e => {
-            console.log(e)
-            alert('Erro! Tente novamente mais tarde.')
-          })
+            })
+            .catch(e => {
+              console.log(e)
+              alert('Erro! Tente novamente mais tarde!')
+            })
+        }
       }
     }
   }

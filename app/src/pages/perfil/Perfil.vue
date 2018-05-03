@@ -88,18 +88,18 @@
           })
           .then(response => {
 
-            if (response.data.token) {
+            if (response.data.status) {
 
               console.log(response.data)
-              this.usuario = response.data
+              this.usuario = response.data.usuario
               sessionStorage.setItem('usuario', JSON.stringify(response.data))
               alert('Perfil atualizado!')
 
-            } else {
+            } else if (response.data.status === false && response.data.validacao) {
               // erro de validação
-              console.log('Erros de validação')
+              // console.log('Erros de validação')
               let erros = ''
-              for (let erro of Object.values(response.data)) {
+              for (let erro of Object.values(response.data.erros)) {
                 erros += erro + ' '
               }
               alert(erros)
