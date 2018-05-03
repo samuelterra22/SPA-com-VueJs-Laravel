@@ -1,12 +1,12 @@
 <template>
 
-  <site-template>
+    <site-template>
 
     <span slot="menuesquerdo">
       <img :src="usuario.imagem" class="responsive-img"/>
     </span>
 
-    <span slot="principal">
+        <span slot="principal">
 
         <h2>Perfil</h2>
 
@@ -29,53 +29,52 @@
 
     </span>
 
-  </site-template>
+    </site-template>
 
 </template>
 
 <script>
   import SiteTemplate from '@/templates/SiteTemplate'
-  import axios from 'axios'
 
   export default {
     name: 'Perfil',
     data () {
       return {
-        usuario:false,
-        name:'',
-        email:'',
-        password:'',
-        password_confirmation:'',
-        imagem:''
+        usuario: false,
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        imagem: ''
       }
     },
-    created(){
-      let usuarioAux = sessionStorage.getItem('usuario');
-      if(usuarioAux){
-        this.usuario = JSON.parse(usuarioAux);
-        this.name = this.usuario.name;
-        this.email = this.usuario.email;
+    created () {
+      let usuarioAux = sessionStorage.getItem('usuario')
+      if (usuarioAux) {
+        this.usuario = JSON.parse(usuarioAux)
+        this.name = this.usuario.name
+        this.email = this.usuario.email
       }
     },
-    components:{
+    components: {
       SiteTemplate
     },
-    methods:{
-      salvaImagem(e){
-        let arquivo = e.target.files || e.dataTransfer.files;
-        if(!arquivo.length){
-          return;
+    methods: {
+      salvaImagem (e) {
+        let arquivo = e.target.files || e.dataTransfer.files
+        if (!arquivo.length) {
+          return
         }
 
-        let reader = new FileReader();
+        let reader = new FileReader()
         reader.onloadend = (e) => {
-          this.imagem = e.target.result;
-        };
-        reader.readAsDataURL(arquivo[0]);
+          this.imagem = e.target.result
+        }
+        reader.readAsDataURL(arquivo[0])
 
       },
       perfil () {
-        axios.put('http://localhost/api/perfil', {
+        this.$http.put(this.$urlApi + 'perfil', {
             name: this.name,
             email: this.email,
             imagem: this.imagem,

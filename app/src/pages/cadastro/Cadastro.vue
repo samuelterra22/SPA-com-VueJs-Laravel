@@ -1,12 +1,12 @@
 <template>
 
-  <login-template>
+    <login-template>
 
     <span slot="menuesquerdo">
       <img class="responsive-img" src="https://www.designerd.com.br/wp-content/uploads/2013/06/criar-rede-social.png"/>
     </span>
 
-    <span slot="principal">
+        <span slot="principal">
 
         <h2>Cadastro</h2>
 
@@ -19,22 +19,21 @@
 
     </span>
 
-  </login-template>
+    </login-template>
 
 </template>
 
 <script>
   import LoginTemplate from '@/templates/LoginTemplate'
-  import axios from 'axios'
 
   export default {
     name: 'Cadastro',
     data () {
       return {
-        name:'',
-        email:'',
-        password:'',
-        password_confirmation:''
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
       }
     },
     components: {
@@ -42,7 +41,7 @@
     },
     methods: {
       cadastro () {
-        axios.post('http://localhost/api/cadastro', {
+        this.$http.post(this.$urlApi + 'cadastro', {
           name: this.name,
           email: this.email,
           password: this.password,

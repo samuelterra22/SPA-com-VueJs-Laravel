@@ -1,12 +1,12 @@
 <template>
 
-  <login-template>
+    <login-template>
 
     <span slot="menuesquerdo">
       <img class="responsive-img" src="https://www.designerd.com.br/wp-content/uploads/2013/06/criar-rede-social.png"/>
     </span>
 
-    <span slot="principal">
+        <span slot="principal">
         <h2>Login</h2>
 
         <input type="email" placeholder="E-mail" v-model="email"/>
@@ -15,13 +15,12 @@
         <router-link class="btn orange right" to="/cadastro">Cadastre-se</router-link>
     </span>
 
-  </login-template>
+    </login-template>
 
 </template>
 
 <script>
   import LoginTemplate from '@/templates/LoginTemplate'
-  import axios from 'axios'
 
   export default {
     name: 'Login',
@@ -36,7 +35,7 @@
     },
     methods: {
       login () {
-        axios.post('http://localhost/api/login', {
+        this.$http.post(this.$urlApi + 'login', {
           email: this.email,
           password: this.password
         })
