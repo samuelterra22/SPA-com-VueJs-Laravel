@@ -1,4 +1,4 @@
-# SPA with VueJS and Laravel
+# SPA with VueJS and Laravel (Under development)
 
 # APP
 
